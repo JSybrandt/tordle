@@ -7,7 +7,7 @@ from . import render, session, util, widgets, word_list
 
 class TordleApp(app.App):
 
-  def __init__(self, *args, target_length: int, total_guesses: int, **kwargs):
+  def __init__(self, *args, target_length: int, total_guesses: int, alphabet:bool, **kwargs):
     super().__init__(*args, **kwargs)
     assert target_length >= 0
     assert total_guesses >= 0
@@ -18,7 +18,7 @@ class TordleApp(app.App):
         target=self._words.get_random_word(self._target_length),
         total_guesses=self._total_guesses,
         words=self._words)
-    self._root_grid = widgets.RootGrid(self._session)
+    self._root_grid = widgets.RootGrid(self._session, show_alphabet=alphabet)
 
   async def on_mount(self):
     await self.view.dock(self._root_grid)
@@ -63,6 +63,10 @@ class TordleApp(app.App):
     "--total-guesses",
     default=6,
     help="The number of guesses you have to get the right word.")
+@click.option(
+    "--alphabet/--no-alphabet",
+    default=True,
+    help="Whether or not to show the 'hint alphabet' while guessing.")
 def main(**kwargs):
   TordleApp.run(**kwargs)
 
