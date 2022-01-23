@@ -7,7 +7,8 @@ from . import render, session, util, widgets, word_list
 
 class TordleApp(app.App):
 
-  def __init__(self, *args, target_length: int, total_guesses: int, alphabet:bool, **kwargs):
+  def __init__(self, *args, target_length: int, total_guesses: int,
+               alphabet: bool, **kwargs):
     super().__init__(*args, **kwargs)
     assert target_length >= 0
     assert total_guesses >= 0

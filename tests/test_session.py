@@ -1,7 +1,6 @@
 import pytest
 
-from tordle import check, session, word_list, check
-
+from tordle import check, session, word_list
 
 
 def test_one_guess_correct():
@@ -61,6 +60,7 @@ def test_three_guesses():
   assert sess.remaining_guesses == 0
   assert sess.guess_history == ["AAA", "BBB", "CCC"]
 
+
 def test_get_hint_alphabet():
   words = word_list.WordList(["ABCDEE", "XBXCXX", "XXCXXX", "XXXEEX"])
   sess = session.Session(target="ABCDEE", total_guesses=3, words=words)
@@ -79,5 +79,3 @@ def test_get_hint_alphabet():
   sess.guess("XXXEEX")
   expected["E"] = check.HintCategory.HIT
   assert sess.get_hint_alphabet() == expected
-
-

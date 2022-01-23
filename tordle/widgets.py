@@ -5,11 +5,14 @@ from textual import app, reactive, widget
 
 from . import check, session, util, word_list
 
-def _create_simple_box_table():
-    return table.Table(
-        show_header=False, show_footer=False, show_lines=True, box=box.SQUARE)
 
-def get_guess_text(letter: str, hint: Optional[check.HintCategory]) -> text.Text:
+def _create_simple_box_table():
+  return table.Table(
+      show_header=False, show_footer=False, show_lines=True, box=box.SQUARE)
+
+
+def get_guess_text(letter: str,
+                   hint: Optional[check.HintCategory]) -> text.Text:
   guess_text = text.Text(letter)
   if hint is None:
     guess_text.stylize("bold")
@@ -71,7 +74,7 @@ class PendingGuessPanel(widget.Widget):
     self._target_length = target_length
 
   def render(self):
-    pending_table= _create_simple_box_table()
+    pending_table = _create_simple_box_table()
     for _ in range(self._target_length):
       pending_table.add_column()
     guess_w_padding = self.pending_guess + " " * (
@@ -119,9 +122,11 @@ class ErrorPanel(widget.Widget):
   def render(self):
     return text.Text(self.message)
 
+
 class HintAlphabet(widget.Widget):
-  _GRID_WIDTH=13
-  def __init__(self, sess:session.Session):
+  _GRID_WIDTH = 13
+
+  def __init__(self, sess: session.Session):
     super().__init__()
     self._session = sess
 
@@ -144,7 +149,7 @@ class HintAlphabet(widget.Widget):
 
 class RootGrid(widget.Widget):
 
-  def __init__(self, sess: session.Session, show_alphabet:bool):
+  def __init__(self, sess: session.Session, show_alphabet: bool):
     super().__init__()
     self._session = sess
     self.guess_table = GuessTable(sess)
