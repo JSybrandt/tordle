@@ -1,8 +1,9 @@
 [tool.poetry]
 name = "tordle"
-version = "0.1.1"
+version = "0.1.2"
 description = "A command-line word game."
 authors = ["Justin Sybrandt <justin@sybrandt.com>"]
+readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.9"
