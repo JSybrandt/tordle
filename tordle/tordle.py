@@ -24,6 +24,9 @@ class TordleApp(app.App):
     await self.view.dock(self._root_grid)
 
   def on_key(self, event):
+    self._root_grid.error_panel.message = ""
+    if event.key == "escape":
+      exit()
     if self._session.status != session.SessionStatus.ACTIVE:
       return
     try:
@@ -38,7 +41,8 @@ class TordleApp(app.App):
         self._root_grid.title_panel.set_victory()
       elif self._session.status == session.SessionStatus.DEFEAT:
         self._root_grid.title_panel.set_defeat(self._session.target)
-      self._root_grid.error_panel.message = ""
+      if self._session.status != session.SessionStatus.ACTIVE:
+        self._root_grid.error_panel.message = "Press Esc to Exit."
     except ValueError as e:
       self._root_grid.error_panel.message = str(e)
     finally:
@@ -56,13 +60,7 @@ class TordleApp(app.App):
     "--total-guesses",
     default=6,
     help="The number of guesses you have to get the right word.")
-@click.option(
-    "--debug/--no-debug",
-    default=False,
-    help="If enabled, we print everying, incluing the answer.")
-def main(debug, **kwargs):
-  if debug:
-    util.enable_debug()
+def main(**kwargs):
   TordleApp.run(**kwargs)
 
 
