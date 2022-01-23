@@ -1,5 +1,5 @@
 import enum
-from typing import List
+from typing import List, Dict, Optional
 
 from . import check, util, word_list
 
@@ -80,4 +80,14 @@ class Session():
 
   def give_up(self):
     self._status = SessionStatus.DEFEAT
+
+  def get_hint_alphabet(self)->Dict[str, Optional[check.HintCategory]]:
+    alphabet = {c:None for c in check.VALID_CHARS}
+    for chars, hints in zip(self.guess_history, self.hint_history):
+      for c, h in zip(chars, hints):
+        base = alphabet[c]
+        if base is None or base == check.HintCategory.CLOSE:
+          alphabet[c] = h
+    return alphabet
+
 

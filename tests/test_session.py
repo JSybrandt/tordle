@@ -1,6 +1,7 @@
 import pytest
 
-from tordle import check, session, word_list
+from tordle import check, session, word_list, check
+
 
 
 def test_one_guess_correct():
@@ -59,3 +60,24 @@ def test_three_guesses():
   assert sess.status == session.SessionStatus.DEFEAT
   assert sess.remaining_guesses == 0
   assert sess.guess_history == ["AAA", "BBB", "CCC"]
+
+def test_get_hint_alphabet():
+  words = word_list.WordList(["ABCDEE", "XBXCXX", "XXCXXX", "XXXEEX"])
+  sess = session.Session(target="ABCDEE", total_guesses=3, words=words)
+  expected = {c: None for c in check.VALID_CHARS}
+  assert sess.get_hint_alphabet() == expected
+  sess.guess("XBXCXX")
+  expected["B"] = check.HintCategory.HIT
+  expected["C"] = check.HintCategory.CLOSE
+  expected["X"] = check.HintCategory.MISS
+  assert sess.get_hint_alphabet() == expected
+  sess.guess("XXCXXX")
+  # Even though B doesn't appear, it was still a hit previously.
+  expected["C"] = check.HintCategory.HIT
+  assert sess.get_hint_alphabet() == expected
+  # Here, E is both close and a hit. We should record hit in the alphabet.
+  sess.guess("XXXEEX")
+  expected["E"] = check.HintCategory.HIT
+  assert sess.get_hint_alphabet() == expected
+
+

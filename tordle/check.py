@@ -41,7 +41,7 @@ def is_correct(guess: str, target: str) -> bool:
   return util.clean_text(guess) == util.clean_text(target)
 
 
-_VALID_CHARS = {c for c in string.ascii_uppercase}
+VALID_CHARS = {c for c in string.ascii_uppercase}
 
 
 def validate_guess(guess: str, target_len: int, words: word_list.WordList):
@@ -60,7 +60,7 @@ def validate_word(word: str, words: word_list.WordList):
     raise ValueError("The empty string is not a valid word.")
   if word not in words:
     raise ValueError(f"'{word}' does not appear in the dictionary.")
-  if any(c not in _VALID_CHARS for c in word):
+  if any(c not in VALID_CHARS for c in word):
     raise ValueError(f"The word'{word}' should only contain letters.")
 
 
@@ -68,5 +68,5 @@ def validate_char(char: str):
   char = util.clean_text(char)
   if len(char) != 1:
     raise ValueError(f"'{char}' is not a single char.")
-  if char not in _VALID_CHARS:
+  if char not in VALID_CHARS:
     raise ValueError(f"'{char}' is not a valid letter.")
