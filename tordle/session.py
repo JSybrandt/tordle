@@ -77,3 +77,7 @@ class Session():
     elif self.remaining_guesses == 0:
       self._status = SessionStatus.DEFEAT
     return hint
+
+  def give_up(self):
+    self._status = SessionStatus.DEFEAT
+

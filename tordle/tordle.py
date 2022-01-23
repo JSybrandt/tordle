@@ -25,18 +25,21 @@ class TordleApp(app.App):
 
   def on_key(self, event):
     self._root_grid.error_panel.message = ""
-    if event.key == "escape":
-      exit()
     if self._session.status != session.SessionStatus.ACTIVE:
+      if event.key == "escape":
+        exit()
       return
     try:
       if event.key == "enter":
         self._session.guess(self._root_grid.pending_guess.pending_guess)
         self._root_grid.pending_guess.clear_guess()
-      if event.key in {"ctrl+h", "delete"}:
+      elif event.key in {"ctrl+h", "delete"}:
         self._root_grid.pending_guess.remove_letter()
+      elif event.key == "escape":
+        self._session.give_up()
       elif len(event.key) == 1:
         self._root_grid.pending_guess.add_letter(event.key)
+
       if self._session.status == session.SessionStatus.VICTORY:
         self._root_grid.title_panel.set_victory()
       elif self._session.status == session.SessionStatus.DEFEAT:
