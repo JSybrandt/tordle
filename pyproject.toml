@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "tordle"
+version = "0.1.0"
+description = "A command-line word game."
+authors = ["Justin Sybrandt <justin@sybrandt.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+rich = "^11.0.0"
+isort = "^5.10.1"
+yapf = "^0.32.0"
+toml = "^0.10.2"
+click = "^8.0.3"
+textual = "^0.1.14"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+tordle = "tordle.tordle:main"
