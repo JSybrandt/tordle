@@ -24,10 +24,11 @@ tordle
 
 - `--target-length`: Specify the size of the taget word.
 - `--total-guesses`: Specify the number of tries to guess the correct word.
+- `--no-alphabet`: Hide the "hint alphabet" that shows which letters you still
+  have available.
 
 ## Roadmap:
 
-- Add an alphabet tracker to show which letters have been guessed.
 - Add a hard mode, which requires future guesses to use past hints.
 - Add an evil mode.
 
